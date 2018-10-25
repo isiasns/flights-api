@@ -37,7 +37,7 @@ public class DatabaseSeeder {
 
     private void seedAirlines() throws IOException {
         Map<String, String> params = new HashMap<>();
-        params.put("active","");
+        params.put("active", "");
         String response = restTemplate.getForObject(flightsApiConfiguration.getApiUrl("airlines", params), String.class);
         Airlines airlines = new ObjectMapper().readValue(response, Airlines.class);
         airlineRepository.saveAll(Arrays.asList(airlines.getAirlines()));
@@ -45,7 +45,7 @@ public class DatabaseSeeder {
 
     private void seedAirports() throws IOException {
         Map<String, String> params = new HashMap<>();
-        params.put("active","");
+        params.put("active", "");
         String response = restTemplate.getForObject(flightsApiConfiguration.getApiUrl("airports", params), String.class);
         Airports airports = new ObjectMapper().readValue(response, Airports.class);
         airportRepository.saveAll(Arrays.asList(airports.getAirports()));
