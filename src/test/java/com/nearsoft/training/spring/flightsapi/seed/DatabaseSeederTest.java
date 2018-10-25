@@ -12,9 +12,9 @@ import java.util.Collections;
 
 @RunWith(EasyMockRunner.class)
 public class DatabaseSeederTest {
-    @Mock(type = MockType.NICE)
+    @Mock
     private AirportService airportService;
-    @Mock(type = MockType.NICE)
+    @Mock
     private AirlineService airlineService;
     @Mock
     private ContextRefreshedEvent contextRefreshedEvent;
@@ -23,7 +23,9 @@ public class DatabaseSeederTest {
 
     @Test
     public void testSeed() throws IOException {
+        EasyMock.expect(airlineService.getAllAirlinesFromApi()).andReturn(Collections.emptyList());
         EasyMock.expect(airlineService.saveAll(EasyMock.anyObject())).andReturn(Collections.emptyList());
+        EasyMock.expect(airportService.getAllAirportsFromApi()).andReturn(Collections.emptyList());
         EasyMock.expect(airportService.saveAll(EasyMock.anyObject())).andReturn(Collections.emptyList());
         EasyMock.replay(airlineService);
         EasyMock.replay(airportService);

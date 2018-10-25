@@ -28,12 +28,12 @@ public class DatabaseSeeder {
     }
 
     private void seedAirlines() throws IOException {
-        List<Airline> airlines = airlineService.getAirlinesFromApi();
+        List<Airline> airlines = airlineService.getAllAirlinesFromApi();
         airlineService.saveAll(airlines);
     }
 
     private void seedAirports() throws IOException {
-        List<Airport> airports = airportService.getAirportsFromApi();
+        List<Airport> airports = airportService.getAllAirportsFromApi();
         airportService.saveAll(airports);
     }
 }

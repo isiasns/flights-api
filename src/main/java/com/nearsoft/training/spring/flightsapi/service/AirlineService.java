@@ -28,7 +28,7 @@ public class AirlineService {
         return this.airlineRepository.saveAll(airlines);
     }
 
-    public List<Airline> getAirlinesFromApi() throws IOException {
+    public List<Airline> getAllAirlinesFromApi() throws IOException {
         Map<String, String> params = new HashMap<>();
         params.put("active", "");
         String response = new RestTemplate().getForObject(flightsApiConfiguration.getApiUrl("airlines", params), String.class);
