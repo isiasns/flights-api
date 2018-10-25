@@ -1,11 +1,11 @@
 package com.nearsoft.training.spring.flightsapi;
 
+import org.easymock.EasyMockRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
-@RunWith(SpringRunner.class)
+@RunWith(EasyMockRunner.class)
 @SpringBootTest
 public class FlightsApiApplicationTests {
 
