@@ -37,7 +37,7 @@ public class FlightsApiConfiguration {
         String apiUrl = this.getApiUrl(api, requiredParams);
         StringBuilder optional = new StringBuilder();
         if (optionalParams != null) {
-            for (Map.Entry<String, String> parameter : requiredParams.entrySet()) {
+            for (Map.Entry<String, String> parameter : optionalParams.entrySet()) {
                 if (!parameter.getValue().isEmpty()) {
                     optional.append("&");
                     optional.append(parameter.getKey());

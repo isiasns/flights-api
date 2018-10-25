@@ -10,7 +10,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -29,7 +29,7 @@ public class AirportService {
     }
 
     public List<Airport> getAllAirportsFromApi() throws IOException {
-        Map<String, String> params = new HashMap<>();
+        Map<String, String> params = new LinkedHashMap<>();
         params.put("active", "");
         String response = new RestTemplate().getForObject(flightsApiConfiguration.getApiUrl("airports", params), String.class);
         Airports airports = new ObjectMapper().readValue(response, Airports.class);
