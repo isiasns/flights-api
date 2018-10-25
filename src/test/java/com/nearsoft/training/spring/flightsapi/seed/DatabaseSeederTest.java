@@ -2,7 +2,10 @@ package com.nearsoft.training.spring.flightsapi.seed;
 
 import com.nearsoft.training.spring.flightsapi.service.AirlineService;
 import com.nearsoft.training.spring.flightsapi.service.AirportService;
-import org.easymock.*;
+import org.easymock.EasyMock;
+import org.easymock.EasyMockRunner;
+import org.easymock.Mock;
+import org.easymock.TestSubject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.context.event.ContextRefreshedEvent;

@@ -10,8 +10,6 @@ import org.junit.runner.RunWith;
 
 import java.io.IOException;
 
-import static org.junit.Assert.*;
-
 @RunWith(EasyMockRunner.class)
 public class ScheduledFlightServiceTest {
     @Mock
