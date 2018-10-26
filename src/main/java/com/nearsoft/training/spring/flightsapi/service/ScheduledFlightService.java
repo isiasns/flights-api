@@ -2,6 +2,7 @@ package com.nearsoft.training.spring.flightsapi.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nearsoft.training.spring.flightsapi.configuration.FlightsApiConfiguration;
+import com.nearsoft.training.spring.flightsapi.model.Airline;
 import com.nearsoft.training.spring.flightsapi.model.ScheduledFlight;
 import com.nearsoft.training.spring.flightsapi.model.ScheduledFlights;
 import org.springframework.cache.annotation.Cacheable;
@@ -10,6 +11,8 @@ import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 import java.util.*;
+
+import static java.util.stream.Collectors.toList;
 
 @Service
 public class ScheduledFlightService {
@@ -29,6 +32,8 @@ public class ScheduledFlightService {
         optional.put("codeType", "FS");
         String response = new RestTemplate().getForObject(flightsApiConfiguration.getApiUrl("schedules", required, optional), String.class);
         ScheduledFlights scheduledFlights = new ObjectMapper().readValue(response, ScheduledFlights.class);
+        List<Airline> airlinesList = new ArrayList<>();
+        List<String> carrierFsCode = airlinesList.stream().map(airline -> airline.getCarrierFsCode()).distinct().collect(toList());
         return Arrays.asList(scheduledFlights.getScheduledFlights());
     }
 }
