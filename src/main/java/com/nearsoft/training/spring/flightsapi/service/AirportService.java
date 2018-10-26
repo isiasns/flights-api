@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,7 +32,7 @@ public class AirportService {
         params.put("active", "");
         String response = new RestTemplate().getForObject(apiUtil.getApiUrl("airports", params), String.class);
         Airports airports = new ObjectMapper().readValue(response, Airports.class);
-        return Arrays.asList(airports.getAirports());
+        return airports.getAirports();
     }
 
     public List<Airport> findByFsIn(List<String> airportCodes) {

@@ -33,7 +33,7 @@ public class AirlineService {
         params.put("active", "");
         String response = new RestTemplate().getForObject(apiUtil.getApiUrl("airlines", params), String.class);
         Airlines airlines = new ObjectMapper().readValue(response, Airlines.class);
-        return Arrays.asList(airlines.getAirlines());
+        return airlines.getAirlines();
     }
 
     public List<Airline> findByFsIn(List<String> fs) {
