@@ -1,12 +1,14 @@
 package com.nearsoft.training.spring.flightsapi.search;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class ScheduleSearch {
     private String from;
     private String to;
