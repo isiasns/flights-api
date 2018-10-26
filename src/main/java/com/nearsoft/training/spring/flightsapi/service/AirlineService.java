@@ -1,10 +1,10 @@
 package com.nearsoft.training.spring.flightsapi.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.nearsoft.training.spring.flightsapi.configuration.FlightsApiConfiguration;
 import com.nearsoft.training.spring.flightsapi.model.Airline;
 import com.nearsoft.training.spring.flightsapi.model.Airlines;
 import com.nearsoft.training.spring.flightsapi.repository.AirlineRepository;
+import com.nearsoft.training.spring.flightsapi.util.ApiUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -17,11 +17,11 @@ import java.util.Map;
 @Service
 public class AirlineService {
     private AirlineRepository airlineRepository;
-    private FlightsApiConfiguration flightsApiConfiguration;
+    private ApiUtil apiUtil;
 
-    public AirlineService(AirlineRepository airlineRepository, FlightsApiConfiguration flightsApiConfiguration) {
+    public AirlineService(AirlineRepository airlineRepository, ApiUtil apiUtil) {
         this.airlineRepository = airlineRepository;
-        this.flightsApiConfiguration = flightsApiConfiguration;
+        this.apiUtil = apiUtil;
     }
 
     public List<Airline> saveAll(List<Airline> airlines) {
@@ -31,7 +31,7 @@ public class AirlineService {
     public List<Airline> getAllAirlinesFromApi() throws IOException {
         Map<String, String> params = new LinkedHashMap<>();
         params.put("active", "");
-        String response = new RestTemplate().getForObject(flightsApiConfiguration.getApiUrl("airlines", params), String.class);
+        String response = new RestTemplate().getForObject(apiUtil.getApiUrl("airlines", params), String.class);
         Airlines airlines = new ObjectMapper().readValue(response, Airlines.class);
         return Arrays.asList(airlines.getAirlines());
     }

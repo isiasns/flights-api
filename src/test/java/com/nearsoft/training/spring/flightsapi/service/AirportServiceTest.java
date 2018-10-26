@@ -1,7 +1,7 @@
 package com.nearsoft.training.spring.flightsapi.service;
 
-import com.nearsoft.training.spring.flightsapi.configuration.FlightsApiConfiguration;
 import com.nearsoft.training.spring.flightsapi.repository.AirportRepository;
+import com.nearsoft.training.spring.flightsapi.util.ApiUtil;
 import org.easymock.EasyMockRunner;
 import org.easymock.Mock;
 import org.easymock.TestSubject;
@@ -18,9 +18,9 @@ public class AirportServiceTest {
     @Mock
     private AirportRepository airportRepository;
     @Mock
-    private FlightsApiConfiguration flightsApiConfiguration;
+    private ApiUtil apiUtil;
     @TestSubject
-    private AirportService airportService = new AirportService(airportRepository, flightsApiConfiguration);
+    private AirportService airportService = new AirportService(airportRepository, apiUtil);
 
     @Test
     public void testSaveAll() {
@@ -33,9 +33,9 @@ public class AirportServiceTest {
     @Test
     public void testGetAllAirportsFromApi() throws IOException {
         String apiUrl = "https://api.flightstats.com/flex/airports/rest/v1/json/active?appId=94f1a83f&appKey=2e4539c28bc1bc0ac82b19b286a3f7d7";
-        expect(flightsApiConfiguration.getApiUrl(anyString(), anyObject())).andReturn(apiUrl);
-        replay(flightsApiConfiguration);
+        expect(apiUtil.getApiUrl(anyString(), anyObject())).andReturn(apiUrl);
+        replay(apiUtil);
         airportService.getAllAirportsFromApi();
-        verify(flightsApiConfiguration);
+        verify(apiUtil);
     }
 }
