@@ -7,11 +7,11 @@ import java.util.Map;
 
 @Component
 public class ApiUtil {
-    private FlightsApiConfiguration flightsApiConfiguration;
     private final static String SLASH = "/";
     private final static String QUESTION = "?";
     private final static String EQUALS = "=";
     private final static String AMP = "&";
+    private FlightsApiConfiguration flightsApiConfiguration;
 
     public ApiUtil(FlightsApiConfiguration flightsApiConfiguration) {
         this.flightsApiConfiguration = flightsApiConfiguration;
@@ -44,7 +44,7 @@ public class ApiUtil {
         builder.append(AMP);
         builder.append("appKey=");
         builder.append(flightsApiConfiguration.getKey());
-        return  builder.toString();
+        return builder.toString();
     }
 
     public String getApiUrl(String api, Map<String, String> requiredParams, Map<String, String> optionalParams) {
