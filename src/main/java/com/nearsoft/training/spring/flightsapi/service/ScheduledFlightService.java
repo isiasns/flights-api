@@ -7,6 +7,7 @@ import com.nearsoft.training.spring.flightsapi.model.ScheduledFlight;
 import com.nearsoft.training.spring.flightsapi.model.ScheduledFlights;
 import com.nearsoft.training.spring.flightsapi.search.ScheduleSearch;
 import com.nearsoft.training.spring.flightsapi.util.ApiUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -22,6 +23,7 @@ public class ScheduledFlightService {
     private AirlineService airlineService;
     private AirportService airportService;
 
+    @Autowired
     public ScheduledFlightService(ApiUtil apiUtil, AirlineService airlineService, AirportService airportService) {
         this.apiUtil = apiUtil;
         this.airlineService = airlineService;

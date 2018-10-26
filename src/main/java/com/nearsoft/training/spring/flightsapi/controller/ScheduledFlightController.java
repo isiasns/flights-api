@@ -3,6 +3,7 @@ package com.nearsoft.training.spring.flightsapi.controller;
 import com.nearsoft.training.spring.flightsapi.model.ScheduledFlight;
 import com.nearsoft.training.spring.flightsapi.search.ScheduleSearch;
 import com.nearsoft.training.spring.flightsapi.service.ScheduledFlightService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +19,7 @@ import java.util.Map;
 public class ScheduledFlightController {
     private ScheduledFlightService scheduledFlightService;
 
+    @Autowired
     public ScheduledFlightController(ScheduledFlightService scheduledFlightService) {
         this.scheduledFlightService = scheduledFlightService;
     }

@@ -5,6 +5,7 @@ import com.nearsoft.training.spring.flightsapi.model.Airport;
 import com.nearsoft.training.spring.flightsapi.model.Airports;
 import com.nearsoft.training.spring.flightsapi.repository.AirportRepository;
 import com.nearsoft.training.spring.flightsapi.util.ApiUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -18,6 +19,7 @@ public class AirportService {
     private AirportRepository airportRepository;
     private ApiUtil apiUtil;
 
+    @Autowired
     public AirportService(AirportRepository airportRepository, ApiUtil apiUtil) {
         this.airportRepository = airportRepository;
         this.apiUtil = apiUtil;

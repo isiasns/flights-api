@@ -4,6 +4,7 @@ import com.nearsoft.training.spring.flightsapi.model.Airline;
 import com.nearsoft.training.spring.flightsapi.model.Airport;
 import com.nearsoft.training.spring.flightsapi.service.AirlineService;
 import com.nearsoft.training.spring.flightsapi.service.AirportService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
@@ -16,6 +17,7 @@ public class DatabaseSeeder {
     private AirportService airportService;
     private AirlineService airlineService;
 
+    @Autowired
     public DatabaseSeeder(AirportService airportService, AirlineService airlineService) {
         this.airportService = airportService;
         this.airlineService = airlineService;

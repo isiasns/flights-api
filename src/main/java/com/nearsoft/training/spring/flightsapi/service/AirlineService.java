@@ -5,6 +5,7 @@ import com.nearsoft.training.spring.flightsapi.model.Airline;
 import com.nearsoft.training.spring.flightsapi.model.Airlines;
 import com.nearsoft.training.spring.flightsapi.repository.AirlineRepository;
 import com.nearsoft.training.spring.flightsapi.util.ApiUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -18,6 +19,7 @@ public class AirlineService {
     private AirlineRepository airlineRepository;
     private ApiUtil apiUtil;
 
+    @Autowired
     public AirlineService(AirlineRepository airlineRepository, ApiUtil apiUtil) {
         this.airlineRepository = airlineRepository;
         this.apiUtil = apiUtil;

@@ -1,6 +1,7 @@
 package com.nearsoft.training.spring.flightsapi.util;
 
 import com.nearsoft.training.spring.flightsapi.configuration.FlightsApiConfiguration;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
@@ -13,6 +14,7 @@ public class ApiUtil {
     private final static String AMP = "&";
     private FlightsApiConfiguration flightsApiConfiguration;
 
+    @Autowired
     public ApiUtil(FlightsApiConfiguration flightsApiConfiguration) {
         this.flightsApiConfiguration = flightsApiConfiguration;
     }
