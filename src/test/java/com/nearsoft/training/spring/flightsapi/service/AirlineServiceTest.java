@@ -2,7 +2,6 @@ package com.nearsoft.training.spring.flightsapi.service;
 
 import com.nearsoft.training.spring.flightsapi.configuration.FlightsApiConfiguration;
 import com.nearsoft.training.spring.flightsapi.repository.AirlineRepository;
-import org.easymock.EasyMock;
 import org.easymock.EasyMockRunner;
 import org.easymock.Mock;
 import org.easymock.TestSubject;

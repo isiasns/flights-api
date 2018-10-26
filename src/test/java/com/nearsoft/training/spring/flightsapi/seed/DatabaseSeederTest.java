@@ -2,7 +2,6 @@ package com.nearsoft.training.spring.flightsapi.seed;
 
 import com.nearsoft.training.spring.flightsapi.service.AirlineService;
 import com.nearsoft.training.spring.flightsapi.service.AirportService;
-import org.easymock.EasyMock;
 import org.easymock.EasyMockRunner;
 import org.easymock.Mock;
 import org.easymock.TestSubject;
@@ -12,6 +11,8 @@ import org.springframework.context.event.ContextRefreshedEvent;
 
 import java.io.IOException;
 import java.util.Collections;
+
+import static org.easymock.EasyMock.*;
 
 @RunWith(EasyMockRunner.class)
 public class DatabaseSeederTest {
@@ -26,15 +27,15 @@ public class DatabaseSeederTest {
 
     @Test
     public void testSeed() throws IOException {
-        EasyMock.expect(airlineService.getAllAirlinesFromApi()).andReturn(Collections.emptyList());
-        EasyMock.expect(airlineService.saveAll(EasyMock.anyObject())).andReturn(Collections.emptyList());
-        EasyMock.expect(airportService.getAllAirportsFromApi()).andReturn(Collections.emptyList());
-        EasyMock.expect(airportService.saveAll(EasyMock.anyObject())).andReturn(Collections.emptyList());
-        EasyMock.replay(airlineService);
-        EasyMock.replay(airportService);
+        expect(airlineService.getAllAirlinesFromApi()).andReturn(Collections.emptyList());
+        expect(airlineService.saveAll(anyObject())).andReturn(Collections.emptyList());
+        expect(airportService.getAllAirportsFromApi()).andReturn(Collections.emptyList());
+        expect(airportService.saveAll(anyObject())).andReturn(Collections.emptyList());
+        replay(airlineService);
+        replay(airportService);
         databaseSeeder.seed(contextRefreshedEvent);
-        EasyMock.verify(airlineService);
-        EasyMock.verify(airportService);
+        verify(airlineService);
+        verify(airportService);
 
     }
 }

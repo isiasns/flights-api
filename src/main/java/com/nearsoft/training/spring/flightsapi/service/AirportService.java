@@ -35,4 +35,8 @@ public class AirportService {
         Airports airports = new ObjectMapper().readValue(response, Airports.class);
         return Arrays.asList(airports.getAirports());
     }
+
+    public List<Airport> findByFsIn(List<String> airportCodes) {
+        return this.airportRepository.findByFsIn(airportCodes);
+    }
 }

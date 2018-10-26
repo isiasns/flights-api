@@ -27,4 +27,7 @@ public class ScheduledFlight {
     private String[] trafficRestrictions;
     private Codeshare[] codeshares;
     private String referenceCode;
+    private Airline airline;
+    private Airport departureAirport;
+    private Airport arrivalAirport;
 }

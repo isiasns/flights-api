@@ -35,4 +35,8 @@ public class AirlineService {
         Airlines airlines = new ObjectMapper().readValue(response, Airlines.class);
         return Arrays.asList(airlines.getAirlines());
     }
+
+    public List<Airline> findByFsIn(List<String> fs) {
+        return this.airlineRepository.findByFsIn(fs);
+    }
 }
