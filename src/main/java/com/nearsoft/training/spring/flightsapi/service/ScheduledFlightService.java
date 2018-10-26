@@ -5,16 +5,14 @@ import com.nearsoft.training.spring.flightsapi.model.Airline;
 import com.nearsoft.training.spring.flightsapi.model.Airport;
 import com.nearsoft.training.spring.flightsapi.model.ScheduledFlight;
 import com.nearsoft.training.spring.flightsapi.model.ScheduledFlights;
+import com.nearsoft.training.spring.flightsapi.search.ScheduleSearch;
 import com.nearsoft.training.spring.flightsapi.util.ApiUtil;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static java.util.stream.Collectors.toList;
 
@@ -74,5 +72,23 @@ public class ScheduledFlightService {
                     .filter(airport -> scheduledFlight.getDepartureAirportFsCode().equals(airport.getFs()))
                     .findFirst().ifPresent(scheduledFlight::setDepartureAirport);
         }
+    }
+
+    public Map<String, List<ScheduledFlight>> getOneWayScheduledFlights(ScheduleSearch scheduleSearch) throws IOException {
+        Map<String, List<ScheduledFlight>> scheduledFlights = new HashMap<>();
+        List<ScheduledFlight> departingFlights =
+                getScheduledFlightsFromApi(scheduleSearch.getFrom(), scheduleSearch.getTo(),
+                        scheduleSearch.getDepartureYear(), scheduleSearch.getDepartureMonth(), scheduleSearch.getDepartureDay());
+        scheduledFlights.put("departing", departingFlights);
+        return scheduledFlights;
+    }
+
+    public Map<String, List<ScheduledFlight>> getRoundTripScheduledFlights(ScheduleSearch scheduleSearch) throws IOException {
+        Map<String, List<ScheduledFlight>> scheduledFlights = getOneWayScheduledFlights(scheduleSearch);
+        List<ScheduledFlight> returningFlights =
+                getScheduledFlightsFromApi(scheduleSearch.getTo(), scheduleSearch.getFrom(),
+                        scheduleSearch.getArrivalYear(), scheduleSearch.getArrivalMonth(), scheduleSearch.getArrivalDay());
+        scheduledFlights.put("returning", returningFlights);
+        return scheduledFlights;
     }
 }
