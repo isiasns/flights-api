@@ -8,9 +8,27 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-* Your favorite IDE for Java development
+* IntelliJ IDEA
+* Docker
 * Lombok plugin
 * MongoDB
+
+### Installing
+
+**IntelliJ IDEA Lombok plugin:**
+
+* Go to: **File | Settings** for Windows and Linux or **IntelliJ IDEA | Preferences** for macOS.
+* In the **Settings/Preferences dialog**, click **Plugins**. The plugins page opens.
+* In the right-hand part of the dialog, click on the **Browse repositories...** button.
+* In the search pane, type **lombok**.
+* Right-click the required plugin and select **Download and Install**.
+* Restart IntelliJ IDEA.
+
+**MongoDB on Docker:**
+
+* Run **docker pull mongo**
+* Run **docker run --name mongodb -d mongo:latest**
+* *No extra configuration needed*
 
 ## Running the tests
 
