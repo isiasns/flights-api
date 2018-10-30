@@ -26,10 +26,8 @@ These instructions will get you a copy of the project up and running on your loc
 
 **MongoDB on Docker:**
 
-* Run **docker pull mongo**
-* Run **docker run --name mongodb -d mongo:latest**
-* Run **docker start mongodb**
-* *No extra configuration needed*
+* On terminal go to **flights-api directory**
+* Run **docker compose up**
 
 ## Running the tests
 
