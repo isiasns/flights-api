@@ -4,35 +4,31 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nearsoft.training.spring.flightsapi.model.Airport;
 import com.nearsoft.training.spring.flightsapi.model.Airports;
 import com.nearsoft.training.spring.flightsapi.repository.AirportRepository;
-import com.nearsoft.training.spring.flightsapi.util.ApiUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class AirportService {
     private AirportRepository airportRepository;
-    private ApiUtil apiUtil;
 
     @Autowired
-    public AirportService(AirportRepository airportRepository, ApiUtil apiUtil) {
+    private RestTemplate restTemplate;
+
+    @Autowired
+    public AirportService(AirportRepository airportRepository) {
         this.airportRepository = airportRepository;
-        this.apiUtil = apiUtil;
     }
 
     public List<Airport> saveAll(List<Airport> airports) {
         return this.airportRepository.saveAll(airports);
     }
 
-    public List<Airport> getAllAirportsFromApi() throws IOException {
-        Map<String, String> params = new LinkedHashMap<>();
-        params.put("active", "");
-        String response = new RestTemplate().getForObject(apiUtil.getApiUrl("airports", params), String.class);
+    public List<Airport> getAllAirportsFromApi(String apiUrl) throws IOException {
+        String response = restTemplate.getForObject(apiUrl, String.class);
         Airports airports = new ObjectMapper().readValue(response, Airports.class);
         return airports.getAirports();
     }

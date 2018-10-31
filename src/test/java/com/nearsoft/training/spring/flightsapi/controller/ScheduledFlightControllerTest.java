@@ -11,7 +11,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringRunner.class)
@@ -26,7 +25,6 @@ public class ScheduledFlightControllerTest {
         String urlTemplate = "/flights/one-way?from=CUU&to=HMO&departureYear=2018&departureMonth=11&departureDay=01";
         this.mockMvc.perform(get(urlTemplate))
                 .andExpect(status().isOk())
-                .andDo(print())
                 .andExpect(content().contentType(new MediaType("application", "json", java.nio.charset.Charset.forName("UTF-8"))))
                 .andExpect(jsonPath("$", hasKey("departing")))
                 .andExpect(jsonPath("$.departing", hasSize(1)))
@@ -46,7 +44,6 @@ public class ScheduledFlightControllerTest {
         String urlTemplate = "/flights/round-trip?from=CUU&to=HMO&departureYear=2018&departureMonth=11&departureDay=01&arrivalYear=2018&arrivalMonth=12&arrivalDay=01";
         this.mockMvc.perform(get(urlTemplate))
                 .andExpect(status().isOk())
-                .andDo(print())
                 .andExpect(content().contentType(new MediaType("application", "json", java.nio.charset.Charset.forName("UTF-8"))))
                 .andExpect(jsonPath("$", hasKey("departing")))
                 .andExpect(jsonPath("$.departing", hasSize(1)))

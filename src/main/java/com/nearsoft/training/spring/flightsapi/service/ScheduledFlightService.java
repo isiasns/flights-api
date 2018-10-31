@@ -24,6 +24,9 @@ public class ScheduledFlightService {
     private AirportService airportService;
 
     @Autowired
+    private RestTemplate restTemplate;
+
+    @Autowired
     public ScheduledFlightService(ApiUtil apiUtil, AirlineService airlineService, AirportService airportService) {
         this.apiUtil = apiUtil;
         this.airlineService = airlineService;
@@ -31,14 +34,8 @@ public class ScheduledFlightService {
     }
 
     @Cacheable("scheduled-flighs")
-    public List<ScheduledFlight> getScheduledFlightsFromApi(String from, String to, String year, String month, String day) throws IOException {
-        Map<String, String> required = new LinkedHashMap<>();
-        required.put("from", from);
-        required.put("to", to);
-        required.put("departing", year + "/" + month + "/" + day);
-        Map<String, String> optional = new LinkedHashMap<>();
-        optional.put("codeType", "FS");
-        String response = new RestTemplate().getForObject(apiUtil.getApiUrl("schedules", required, optional), String.class);
+    public List<ScheduledFlight> getScheduledFlightsFromApi(String apiUrl) throws IOException {
+        String response = restTemplate.getForObject(apiUrl, String.class);
         ScheduledFlights scheduledFlights = new ObjectMapper().readValue(response, ScheduledFlights.class);
         loadAirlines(Arrays.asList(scheduledFlights.getScheduledFlights()));
         loadAirports(Arrays.asList(scheduledFlights.getScheduledFlights()));
@@ -50,10 +47,12 @@ public class ScheduledFlightService {
                 .map(scheduledFlight -> scheduledFlight.getCarrierFsCode())
                 .distinct().collect(toList());
         List<Airline> airlines = this.airlineService.findByFsIn(carrierFsCode);
-        for (ScheduledFlight scheduledFlight : scheduledFlights) {
-            airlines.stream()
-                    .filter(airline -> scheduledFlight.getCarrierFsCode().equals(airline.getFs()))
-                    .findFirst().ifPresent(scheduledFlight::setAirline);
+        if (airlines != null && !airlines.isEmpty()) {
+            for (ScheduledFlight scheduledFlight : scheduledFlights) {
+                airlines.stream()
+                        .filter(airline -> scheduledFlight.getCarrierFsCode().equals(airline.getFs()))
+                        .findFirst().ifPresent(scheduledFlight::setAirline);
+            }
         }
     }
 
@@ -66,30 +65,42 @@ public class ScheduledFlightService {
                 .distinct().collect(toList()));
         airportCodes = airportCodes.stream().distinct().collect(toList());
         List<Airport> airports = this.airportService.findByFsIn(airportCodes);
-        for (ScheduledFlight scheduledFlight : scheduledFlights) {
-            airports.stream()
-                    .filter(airport -> scheduledFlight.getArrivalAirportFsCode().equals(airport.getFs()))
-                    .findFirst().ifPresent(scheduledFlight::setArrivalAirport);
-            airports.stream()
-                    .filter(airport -> scheduledFlight.getDepartureAirportFsCode().equals(airport.getFs()))
-                    .findFirst().ifPresent(scheduledFlight::setDepartureAirport);
+        if (airports != null && !airports.isEmpty()) {
+            for (ScheduledFlight scheduledFlight : scheduledFlights) {
+                airports.stream()
+                        .filter(airport -> scheduledFlight.getArrivalAirportFsCode().equals(airport.getFs()))
+                        .findFirst().ifPresent(scheduledFlight::setArrivalAirport);
+                airports.stream()
+                        .filter(airport -> scheduledFlight.getDepartureAirportFsCode().equals(airport.getFs()))
+                        .findFirst().ifPresent(scheduledFlight::setDepartureAirport);
+            }
         }
     }
 
     public Map<String, List<ScheduledFlight>> getOneWayScheduledFlights(ScheduleSearch scheduleSearch) throws IOException {
         Map<String, List<ScheduledFlight>> scheduledFlights = new HashMap<>();
+        Map<String, String> required = new LinkedHashMap<>();
+        required.put("from", scheduleSearch.getFrom());
+        required.put("to", scheduleSearch.getTo());
+        required.put("departing", scheduleSearch.getDepartureYear() + "/" + scheduleSearch.getDepartureMonth() + "/" + scheduleSearch.getDepartureDay());
+        Map<String, String> optional = new LinkedHashMap<>();
+        optional.put("codeType", "FS");
         List<ScheduledFlight> departingFlights =
-                getScheduledFlightsFromApi(scheduleSearch.getFrom(), scheduleSearch.getTo(),
-                        scheduleSearch.getDepartureYear(), scheduleSearch.getDepartureMonth(), scheduleSearch.getDepartureDay());
+                getScheduledFlightsFromApi(apiUtil.getApiUrl("schedules", required, optional));
         scheduledFlights.put("departing", departingFlights);
         return scheduledFlights;
     }
 
     public Map<String, List<ScheduledFlight>> getRoundTripScheduledFlights(ScheduleSearch scheduleSearch) throws IOException {
         Map<String, List<ScheduledFlight>> scheduledFlights = getOneWayScheduledFlights(scheduleSearch);
+        Map<String, String> required = new LinkedHashMap<>();
+        required.put("from", scheduleSearch.getTo());
+        required.put("to", scheduleSearch.getFrom());
+        required.put("departing", scheduleSearch.getArrivalYear() + "/" + scheduleSearch.getArrivalMonth() + "/" + scheduleSearch.getArrivalDay());
+        Map<String, String> optional = new LinkedHashMap<>();
+        optional.put("codeType", "FS");
         List<ScheduledFlight> returningFlights =
-                getScheduledFlightsFromApi(scheduleSearch.getTo(), scheduleSearch.getFrom(),
-                        scheduleSearch.getArrivalYear(), scheduleSearch.getArrivalMonth(), scheduleSearch.getArrivalDay());
+                getScheduledFlightsFromApi(apiUtil.getApiUrl("schedules", required, optional));
         scheduledFlights.put("returning", returningFlights);
         return scheduledFlights;
     }
