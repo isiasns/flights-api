@@ -36,4 +36,8 @@ public class AirportService {
     public List<Airport> findByFsIn(List<String> airportCodes) {
         return this.airportRepository.findByFsIn(airportCodes);
     }
+
+    public List<Airport> findAll() {
+        return this.airportRepository.findAll();
+    }
 }

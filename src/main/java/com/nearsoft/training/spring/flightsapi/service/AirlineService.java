@@ -36,4 +36,8 @@ public class AirlineService {
     public List<Airline> findByFsIn(List<String> fs) {
         return this.airlineRepository.findByFsIn(fs);
     }
+
+    public List<Airline> findAll() {
+        return this.airlineRepository.findAll();
+    }
 }
