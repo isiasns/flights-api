@@ -29,14 +29,14 @@ public class ScheduledFlightControllerTest {
                 .andExpect(jsonPath("$", hasKey("departing")))
                 .andExpect(jsonPath("$.departing", hasSize(1)))
                 .andExpect(jsonPath("$.departing.[0]", hasKey("airline")))
-                .andExpect(jsonPath("$.departing.[0].airline", hasKey("fs")))
-                .andExpect(jsonPath("$.departing.[0].airline.fs", containsString("LCT")))
+                .andExpect(jsonPath("$.departing.[0].airline", hasKey("id")))
+                .andExpect(jsonPath("$.departing.[0].airline.id", containsString("LCT")))
                 .andExpect(jsonPath("$.departing.[0]", hasKey("departureAirport")))
-                .andExpect(jsonPath("$.departing.[0].departureAirport", hasKey("fs")))
-                .andExpect(jsonPath("$.departing.[0].departureAirport.fs", containsString("CUU")))
+                .andExpect(jsonPath("$.departing.[0].departureAirport", hasKey("id")))
+                .andExpect(jsonPath("$.departing.[0].departureAirport.id", containsString("CUU")))
                 .andExpect(jsonPath("$.departing.[0]", hasKey("arrivalAirport")))
-                .andExpect(jsonPath("$.departing.[0].arrivalAirport", hasKey("fs")))
-                .andExpect(jsonPath("$.departing.[0].arrivalAirport.fs", containsString("HMO")));
+                .andExpect(jsonPath("$.departing.[0].arrivalAirport", hasKey("id")))
+                .andExpect(jsonPath("$.departing.[0].arrivalAirport.id", containsString("HMO")));
     }
 
     @Test
@@ -48,25 +48,25 @@ public class ScheduledFlightControllerTest {
                 .andExpect(jsonPath("$", hasKey("departing")))
                 .andExpect(jsonPath("$.departing", hasSize(1)))
                 .andExpect(jsonPath("$.departing.[0]", hasKey("airline")))
-                .andExpect(jsonPath("$.departing.[0].airline", hasKey("fs")))
-                .andExpect(jsonPath("$.departing.[0].airline.fs", containsString("LCT")))
+                .andExpect(jsonPath("$.departing.[0].airline", hasKey("id")))
+                .andExpect(jsonPath("$.departing.[0].airline.id", containsString("LCT")))
                 .andExpect(jsonPath("$.departing.[0]", hasKey("departureAirport")))
-                .andExpect(jsonPath("$.departing.[0].departureAirport", hasKey("fs")))
-                .andExpect(jsonPath("$.departing.[0].departureAirport.fs", containsString("CUU")))
+                .andExpect(jsonPath("$.departing.[0].departureAirport", hasKey("id")))
+                .andExpect(jsonPath("$.departing.[0].departureAirport.id", containsString("CUU")))
                 .andExpect(jsonPath("$.departing.[0]", hasKey("arrivalAirport")))
-                .andExpect(jsonPath("$.departing.[0].arrivalAirport", hasKey("fs")))
-                .andExpect(jsonPath("$.departing.[0].arrivalAirport.fs", containsString("HMO")))
+                .andExpect(jsonPath("$.departing.[0].arrivalAirport", hasKey("id")))
+                .andExpect(jsonPath("$.departing.[0].arrivalAirport.id", containsString("HMO")))
                 .andExpect(jsonPath("$", hasKey("returning")))
                 .andExpect(jsonPath("$.returning", hasSize(1)))
                 .andExpect(jsonPath("$.returning.[0]", hasKey("airline")))
-                .andExpect(jsonPath("$.returning.[0].airline", hasKey("fs")))
-                .andExpect(jsonPath("$.returning.[0].airline.fs", containsString("LCT")))
+                .andExpect(jsonPath("$.returning.[0].airline", hasKey("id")))
+                .andExpect(jsonPath("$.returning.[0].airline.id", containsString("LCT")))
                 .andExpect(jsonPath("$.returning.[0]", hasKey("departureAirport")))
-                .andExpect(jsonPath("$.returning.[0].departureAirport", hasKey("fs")))
-                .andExpect(jsonPath("$.returning.[0].departureAirport.fs", containsString("HMO")))
+                .andExpect(jsonPath("$.returning.[0].departureAirport", hasKey("id")))
+                .andExpect(jsonPath("$.returning.[0].departureAirport.id", containsString("HMO")))
                 .andExpect(jsonPath("$.returning.[0]", hasKey("arrivalAirport")))
-                .andExpect(jsonPath("$.returning.[0].arrivalAirport", hasKey("fs")))
-                .andExpect(jsonPath("$.returning.[0].arrivalAirport.fs", containsString("CUU")));
+                .andExpect(jsonPath("$.returning.[0].arrivalAirport", hasKey("id")))
+                .andExpect(jsonPath("$.returning.[0].arrivalAirport.id", containsString("CUU")));
     }
 
     @Test
@@ -77,13 +77,13 @@ public class ScheduledFlightControllerTest {
                 .andExpect(content().contentType(new MediaType("application", "json", java.nio.charset.Charset.forName("UTF-8"))))
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$.[0]", hasKey("airline")))
-                .andExpect(jsonPath("$.[0].airline", hasKey("fs")))
-                .andExpect(jsonPath("$.[0].airline.fs", containsString("LCT")))
+                .andExpect(jsonPath("$.[0].airline", hasKey("id")))
+                .andExpect(jsonPath("$.[0].airline.id", containsString("LCT")))
                 .andExpect(jsonPath("$.[0]", hasKey("departureAirport")))
-                .andExpect(jsonPath("$.[0].departureAirport", hasKey("fs")))
-                .andExpect(jsonPath("$.[0].departureAirport.fs", containsString("CUU")))
+                .andExpect(jsonPath("$.[0].departureAirport", hasKey("id")))
+                .andExpect(jsonPath("$.[0].departureAirport.id", containsString("CUU")))
                 .andExpect(jsonPath("$.[0]", hasKey("arrivalAirport")))
-                .andExpect(jsonPath("$.[0].arrivalAirport", hasKey("fs")))
-                .andExpect(jsonPath("$.[0].arrivalAirport.fs", containsString("HMO")));
+                .andExpect(jsonPath("$.[0].arrivalAirport", hasKey("id")))
+                .andExpect(jsonPath("$.[0].arrivalAirport.id", containsString("HMO")));
     }
 }
