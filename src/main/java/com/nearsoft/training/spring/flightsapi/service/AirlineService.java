@@ -5,6 +5,7 @@ import com.nearsoft.training.spring.flightsapi.model.Airline;
 import com.nearsoft.training.spring.flightsapi.model.Airlines;
 import com.nearsoft.training.spring.flightsapi.repository.AirlineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -37,6 +38,7 @@ public class AirlineService {
         return this.airlineRepository.findByFsIn(fs);
     }
 
+    @Cacheable("airlines")
     public List<Airline> findAll() {
         return this.airlineRepository.findAll();
     }

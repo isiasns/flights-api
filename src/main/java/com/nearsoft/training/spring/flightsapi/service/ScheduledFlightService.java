@@ -78,30 +78,30 @@ public class ScheduledFlightService {
     }
 
     public Map<String, List<ScheduledFlight>> getOneWayScheduledFlights(ScheduleSearch scheduleSearch) throws IOException {
-        Map<String, List<ScheduledFlight>> scheduledFlights = new HashMap<>();
-        Map<String, String> required = new LinkedHashMap<>();
-        required.put("from", scheduleSearch.getFrom());
-        required.put("to", scheduleSearch.getTo());
-        required.put("departing", scheduleSearch.getDepartureYear() + "/" + scheduleSearch.getDepartureMonth() + "/" + scheduleSearch.getDepartureDay());
-        Map<String, String> optional = new LinkedHashMap<>();
-        optional.put("codeType", "FS");
-        List<ScheduledFlight> departingFlights =
-                getScheduledFlightsFromApi(apiUtil.getApiUrl("schedules", required, optional));
+        Map<String, List<ScheduledFlight>> scheduledFlights = new HashMap<>();;
+        List<ScheduledFlight> departingFlights = getScheduledFlights(scheduleSearch.getFrom(), scheduleSearch.getTo(),
+                scheduleSearch.getDepartureYear(), scheduleSearch.getDepartureMonth(), scheduleSearch.getDepartureDay());
         scheduledFlights.put("departing", departingFlights);
         return scheduledFlights;
     }
 
     public Map<String, List<ScheduledFlight>> getRoundTripScheduledFlights(ScheduleSearch scheduleSearch) throws IOException {
         Map<String, List<ScheduledFlight>> scheduledFlights = getOneWayScheduledFlights(scheduleSearch);
-        Map<String, String> required = new LinkedHashMap<>();
-        required.put("from", scheduleSearch.getTo());
-        required.put("to", scheduleSearch.getFrom());
-        required.put("departing", scheduleSearch.getArrivalYear() + "/" + scheduleSearch.getArrivalMonth() + "/" + scheduleSearch.getArrivalDay());
-        Map<String, String> optional = new LinkedHashMap<>();
-        optional.put("codeType", "FS");
-        List<ScheduledFlight> returningFlights =
-                getScheduledFlightsFromApi(apiUtil.getApiUrl("schedules", required, optional));
+        List<ScheduledFlight> returningFlights = getScheduledFlights(scheduleSearch.getTo(), scheduleSearch.getFrom(),
+                scheduleSearch.getArrivalYear(), scheduleSearch.getArrivalMonth(), scheduleSearch.getArrivalDay());
         scheduledFlights.put("returning", returningFlights);
         return scheduledFlights;
+    }
+
+    public List<ScheduledFlight> getScheduledFlights(String from, String to, String year, String month, String day) throws IOException {
+        Map<String, String> required = new LinkedHashMap<>();
+        required.put("from", from);
+        required.put("to", to);
+        required.put("departing", year + "/" + month + "/" + day);
+        Map<String, String> optional = new LinkedHashMap<>();
+        optional.put("codeType", "FS");
+        List<ScheduledFlight> departingFlights =
+                getScheduledFlightsFromApi(apiUtil.getApiUrl("schedules", required, optional));
+        return departingFlights;
     }
 }

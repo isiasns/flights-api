@@ -1,8 +1,10 @@
 package com.nearsoft.training.spring.flightsapi.model;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 
@@ -13,8 +15,10 @@ import org.springframework.data.annotation.Id;
 public class Airline {
     @Id
     private String fs;
-    private String iata;
-    private String icao;
     private String name;
-    private Boolean active;
+
+    @JsonGetter("id")
+    public String getFs(){
+        return this.fs;
+    }
 }

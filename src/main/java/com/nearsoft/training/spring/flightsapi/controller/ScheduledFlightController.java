@@ -33,4 +33,11 @@ public class ScheduledFlightController {
     public ResponseEntity<Map<String, List<ScheduledFlight>>> getScheduledFlightsRoundTrip(ScheduleSearch scheduleSearch) throws IOException {
         return new ResponseEntity<>(this.scheduledFlightService.getRoundTripScheduledFlights(scheduleSearch), HttpStatus.OK);
     }
+
+    @GetMapping
+    public ResponseEntity<List<ScheduledFlight>> getScheduledFlights(ScheduleSearch scheduleSearch) throws IOException {
+        return new ResponseEntity<>(this.scheduledFlightService.getScheduledFlights(scheduleSearch.getFrom(),
+                scheduleSearch.getTo(), scheduleSearch.getDepartureYear(), scheduleSearch.getDepartureMonth(),
+                scheduleSearch.getDepartureDay()), HttpStatus.OK);
+    }
 }

@@ -68,4 +68,22 @@ public class ScheduledFlightControllerTest {
                 .andExpect(jsonPath("$.returning.[0].arrivalAirport", hasKey("fs")))
                 .andExpect(jsonPath("$.returning.[0].arrivalAirport.fs", containsString("CUU")));
     }
+
+    @Test
+    public void testGetScheduledFlights() throws Exception {
+        String urlTemplate = "/flights?from=CUU&to=HMO&departureYear=2018&departureMonth=11&departureDay=01";
+        this.mockMvc.perform(get(urlTemplate))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(new MediaType("application", "json", java.nio.charset.Charset.forName("UTF-8"))))
+                .andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$.[0]", hasKey("airline")))
+                .andExpect(jsonPath("$.[0].airline", hasKey("fs")))
+                .andExpect(jsonPath("$.[0].airline.fs", containsString("LCT")))
+                .andExpect(jsonPath("$.[0]", hasKey("departureAirport")))
+                .andExpect(jsonPath("$.[0].departureAirport", hasKey("fs")))
+                .andExpect(jsonPath("$.[0].departureAirport.fs", containsString("CUU")))
+                .andExpect(jsonPath("$.[0]", hasKey("arrivalAirport")))
+                .andExpect(jsonPath("$.[0].arrivalAirport", hasKey("fs")))
+                .andExpect(jsonPath("$.[0].arrivalAirport.fs", containsString("HMO")));
+    }
 }
