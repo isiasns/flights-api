@@ -22,7 +22,7 @@ public class ScheduledFlightControllerTest {
 
     @Test
     public void testGetScheduledFlightsOneWay() throws Exception {
-        String urlTemplate = "/flights/one-way?from=CUU&to=HMO&departureYear=2018&departureMonth=11&departureDay=01";
+        String urlTemplate = "/flights/one-way?from=CUU&to=HMO&departureYear=2018&departureMonth=12&departureDay=01";
         this.mockMvc.perform(get(urlTemplate))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(new MediaType("application", "json", java.nio.charset.Charset.forName("UTF-8"))))
@@ -41,7 +41,7 @@ public class ScheduledFlightControllerTest {
 
     @Test
     public void testGetScheduledFlightsRoundTrip() throws Exception {
-        String urlTemplate = "/flights/round-trip?from=CUU&to=HMO&departureYear=2018&departureMonth=11&departureDay=01&arrivalYear=2018&arrivalMonth=12&arrivalDay=01";
+        String urlTemplate = "/flights/round-trip?from=CUU&to=HMO&departureYear=2018&departureMonth=12&departureDay=01&arrivalYear=2018&arrivalMonth=12&arrivalDay=01";
         this.mockMvc.perform(get(urlTemplate))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(new MediaType("application", "json", java.nio.charset.Charset.forName("UTF-8"))))
@@ -71,7 +71,7 @@ public class ScheduledFlightControllerTest {
 
     @Test
     public void testGetScheduledFlights() throws Exception {
-        String urlTemplate = "/flights?from=CUU&to=HMO&departureYear=2018&departureMonth=11&departureDay=01";
+        String urlTemplate = "/flights?from=CUU&to=HMO&departureYear=2018&departureMonth=12&departureDay=01";
         this.mockMvc.perform(get(urlTemplate))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(new MediaType("application", "json", java.nio.charset.Charset.forName("UTF-8"))))

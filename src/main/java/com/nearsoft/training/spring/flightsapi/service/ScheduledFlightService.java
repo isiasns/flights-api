@@ -14,6 +14,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
 
@@ -39,7 +40,10 @@ public class ScheduledFlightService {
         ScheduledFlights scheduledFlights = new ObjectMapper().readValue(response, ScheduledFlights.class);
         loadAirlines(Arrays.asList(scheduledFlights.getScheduledFlights()));
         loadAirports(Arrays.asList(scheduledFlights.getScheduledFlights()));
-        return Arrays.asList(scheduledFlights.getScheduledFlights());
+        return Arrays.asList(scheduledFlights.getScheduledFlights()).stream().sorted(
+                Comparator.comparing(ScheduledFlight::getCarrierFsCode)
+                        .thenComparing(ScheduledFlight::getDepartureTime))
+                .collect(Collectors.toList());
     }
 
     private void loadAirlines(List<ScheduledFlight> scheduledFlights) {
