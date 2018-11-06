@@ -2,15 +2,16 @@ package com.nearsoft.training.spring.flightsapi.model;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ScheduledFlight {
     private String carrierFsCode;
@@ -27,12 +28,12 @@ public class ScheduledFlight {
     private Airport arrivalAirport;
 
     @JsonGetter("id")
-    public String getFlightNumber(){
+    public String getFlightNumber() {
         return this.flightNumber;
     }
 
     @JsonSetter("flightNumber")
-    public void setFlightNumber(String flightNumber){
+    public void setFlightNumber(String flightNumber) {
         this.flightNumber = flightNumber;
     }
 }

@@ -82,7 +82,8 @@ public class ScheduledFlightService {
     }
 
     public Map<String, List<ScheduledFlight>> getOneWayScheduledFlights(ScheduleSearch scheduleSearch) throws IOException {
-        Map<String, List<ScheduledFlight>> scheduledFlights = new HashMap<>();;
+        Map<String, List<ScheduledFlight>> scheduledFlights = new HashMap<>();
+        ;
         List<ScheduledFlight> departingFlights = getScheduledFlights(scheduleSearch.getFrom(), scheduleSearch.getTo(),
                 scheduleSearch.getDepartureYear(), scheduleSearch.getDepartureMonth(), scheduleSearch.getDepartureDay());
         scheduledFlights.put("departing", departingFlights);
