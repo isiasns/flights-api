@@ -1,12 +1,13 @@
 package com.nearsoft.training.spring.flightsapi.service;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nearsoft.training.spring.flightsapi.model.Airline;
 import com.nearsoft.training.spring.flightsapi.model.Airport;
 import com.nearsoft.training.spring.flightsapi.model.ScheduledFlight;
-import com.nearsoft.training.spring.flightsapi.model.ScheduledFlights;
 import com.nearsoft.training.spring.flightsapi.search.ScheduleSearch;
 import com.nearsoft.training.spring.flightsapi.util.ApiUtil;
+import com.nearsoft.training.spring.flightsapi.util.JsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -37,10 +38,11 @@ public class ScheduledFlightService {
     @Cacheable("scheduled-flighs")
     public List<ScheduledFlight> getScheduledFlightsFromApi(String apiUrl) throws IOException {
         String response = restTemplate.getForObject(apiUrl, String.class);
-        ScheduledFlights scheduledFlights = new ObjectMapper().readValue(response, ScheduledFlights.class);
-        loadAirlines(Arrays.asList(scheduledFlights.getScheduledFlights()));
-        loadAirports(Arrays.asList(scheduledFlights.getScheduledFlights()));
-        return Arrays.asList(scheduledFlights.getScheduledFlights()).stream().sorted(
+        JsonNode jsonNode = JsonUtil.getJsonCollection(response, "/scheduledFlights");
+        ScheduledFlight[] scheduledFlights = new ObjectMapper().treeToValue(jsonNode, ScheduledFlight[].class);
+        loadAirlines(Arrays.asList(scheduledFlights));
+        loadAirports(Arrays.asList(scheduledFlights));
+        return Arrays.asList(scheduledFlights).stream().sorted(
                 Comparator.comparing(ScheduledFlight::getCarrierFsCode)
                         .thenComparing(ScheduledFlight::getDepartureTime))
                 .collect(Collectors.toList());

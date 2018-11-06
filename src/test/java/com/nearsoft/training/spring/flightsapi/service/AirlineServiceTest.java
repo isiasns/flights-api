@@ -1,5 +1,6 @@
 package com.nearsoft.training.spring.flightsapi.service;
 
+import com.nearsoft.training.spring.flightsapi.model.Airline;
 import com.nearsoft.training.spring.flightsapi.repository.AirlineRepository;
 import org.easymock.EasyMockRunner;
 import org.easymock.Mock;
@@ -9,9 +10,11 @@ import org.junit.runner.RunWith;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
+import java.util.List;
 
 import static org.easymock.EasyMock.*;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 
 @RunWith(EasyMockRunner.class)
@@ -30,7 +33,10 @@ public class AirlineServiceTest {
         String response = "{\"airlines\":[{\"fs\":\"0B\",\"iata\":\"0B\",\"icao\":\"BMS\",\"name\":\"Blue Air\",\"active\":true},{\"fs\":\"0G\",\"iata\":\"G6\",\"icao\":\"GHT\",\"name\":\"Ghadames Air\",\"active\":true}]}";
         expect(restTemplate.getForObject(apiUrl, String.class)).andReturn(response);
         replay(restTemplate);
-        assertThat(airlineService.getAllAirlinesFromApi(apiUrl), hasSize(2));
+        List<Airline> airlines = airlineService.getAllAirlinesFromApi(apiUrl);
+        assertThat(airlines, hasSize(2));
+        assertThat(airlines.get(0).getFs(), equalTo("0B"));
+        assertThat(airlines.get(1).getFs(), equalTo("0G"));
         verify(restTemplate);
         reset(restTemplate);
     }
