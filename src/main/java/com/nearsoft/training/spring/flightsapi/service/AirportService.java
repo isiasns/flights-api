@@ -1,15 +1,17 @@
 package com.nearsoft.training.spring.flightsapi.service;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nearsoft.training.spring.flightsapi.model.Airport;
-import com.nearsoft.training.spring.flightsapi.model.Airports;
 import com.nearsoft.training.spring.flightsapi.repository.AirportRepository;
+import com.nearsoft.training.spring.flightsapi.util.JsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -30,8 +32,9 @@ public class AirportService {
 
     public List<Airport> getAllAirportsFromApi(String apiUrl) throws IOException {
         String response = restTemplate.getForObject(apiUrl, String.class);
-        Airports airports = new ObjectMapper().readValue(response, Airports.class);
-        return airports.getAirports();
+        JsonNode jsonNode = JsonUtil.getJsonCollection(response, "/airports");
+        Airport[] airports = new ObjectMapper().treeToValue(jsonNode, Airport[].class);
+        return Arrays.asList(airports);
     }
 
     public List<Airport> findByFsIn(List<String> airportCodes) {
